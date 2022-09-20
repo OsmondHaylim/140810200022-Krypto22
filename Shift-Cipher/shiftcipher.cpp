@@ -66,11 +66,11 @@ int main() {
     cin >> key;
 
     cout << "\n>> Encrypted Text : ";
-    cout << Encrypt(text, key) << endl;
+    cout << Encrypt(text, key) << endl;// x + key
 
     cout << "\n>> Decrypted Text : ";
-    cout << Decrypt(text, key) << endl;
+    cout << Decrypt(text, key) << endl;// x - key
 
-    cout << Decrypt(Encrypt(text, key), key) << endl;
+    cout << Decrypt(Encrypt(text, key), key) << endl;// Hasil setelah enkripsi lalu didekripsi
 
 }
