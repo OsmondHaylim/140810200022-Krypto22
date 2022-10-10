@@ -46,6 +46,7 @@ int** inverse(int key[][2]){
 			else{
 				invKey[i][j] = (inv[i][j]*detInv%26);
 			}
+            cout << "test= " << invKey[i][j] << endl;
 		}
     
     int** array2D = 0;
@@ -140,40 +141,49 @@ void elCheck(int key[][2], string text){
         cout << "Can be Decrypted\n";
         cout << "Hasil Enkripsi : " << endl << Decrypt(key, text) << endl;
     }}
-// void keySearch(int key[][2], string text, string text2){
-//     int con[2][2];
-//     int con2[2][2];
-//     int z = 0;
-//     if(text.length()%2 == 0){
-//         z = text.length()/2;
-//     }else{
-//         z = (text.length()/2) + 1;
-//     }
-//     for(int i = 0; i < 2; i++){
-//         con[0][0] = 23;con[1][0] = 23;con[0][1] = 23;con[1][1] = 23;
-//         for(int j = 0; j < 2; j++){ // alphabet -> ASCII number
-//             if((int)text[j + (i*2)] >= 97 && (int)text[j + (i*2)] <= 122) {  // alfabet kecil
-//                 con[j][i] = (int)text[j + (i*2)] - 97;
-//             }else if((int)text[j + (i*2)] >= 65 && (int)text[j + (i*2)] <= 90) {  // alfabet kapital
-//                 con[j][i] = (int)text[j + (i*2)] - 65;
-//             }else if(isblank(text[j + (i*2)])){
-//                 con[j][i] = 23;
-//             }}
-//     }
-//     for(int i = 0; i < 2; i++){
-//         con2[0][0] = 23;con2[1][0] = 23;con2[0][1] = 23;con2[1][1] = 23;
-//         for(int j = 0; j < 2; j++){ // alphabet -> ASCII number
-//             if((int)text2[j + (i*2)] >= 97 && (int)text2[j + (i*2)] <= 122) {  // alfabet kecil
-//                 con2[j][i] = (int)text2[j + (i*2)] - 97;
-//             }else if((int)text2[j + (i*2)] >= 65 && (int)text2[j + (i*2)] <= 90) {  // alfabet kapital
-//                 con2[j][i] = (int)text2[j + (i*2)] - 65;
-//             }else if(isblank(text2[j + (i*2)])){
-//                 con2[j][i] = 23;
-//             }}
-//     }
-// }
+void keySearch(int key[][2], string text, string text2){
+    int con[2][2];
+    int con2[2][2];
+    int z = 0;
+    if(text.length()%2 == 0){
+        z = text.length()/2;
+    }else{
+        z = (text.length()/2) + 1;
+    }
+    for(int i = 0; i < 2; i++){
+        con[0][0] = 23;con[1][0] = 23;con[0][1] = 23;con[1][1] = 23;
+        for(int j = 0; j < 2; j++){ // alphabet -> ASCII number
+            if((int)text[j + (i*2)] >= 97 && (int)text[j + (i*2)] <= 122) {  // alfabet kecil
+                con[j][i] = (int)text[j + (i*2)] - 97;
+            }else if((int)text[j + (i*2)] >= 65 && (int)text[j + (i*2)] <= 90) {  // alfabet kapital
+                con[j][i] = (int)text[j + (i*2)] - 65;
+            }else if(isblank(text[j + (i*2)])){
+                con[j][i] = 23;
+            }
+    }}
+    for(int i = 0; i < 2; i++){
+        con2[0][0] = 23;con2[1][0] = 23;con2[0][1] = 23;con2[1][1] = 23;
+        for(int j = 0; j < 2; j++){ // alphabet -> ASCII number
+            if((int)text2[j + (i*2)] >= 97 && (int)text2[j + (i*2)] <= 122) {  // alfabet kecil
+                con2[j][i] = (int)text2[j + (i*2)] - 97;
+            }else if((int)text2[j + (i*2)] >= 65 && (int)text2[j + (i*2)] <= 90) {  // alfabet kapital
+                con2[j][i] = (int)text2[j + (i*2)] - 65;
+            }else if(isblank(text2[j + (i*2)])){
+                con2[j][i] = 23;
+            }}
+    }
+    int** conI = inverse(con);
+    int con3[2][2];
+    con3[0][0] = ((con2[0][0]*conI[0][0] + con2[0][1]*conI[1][0])%26);
+    
+    con3[0][1] = ((con2[0][0]*conI[0][1] + con2[0][1]*conI[1][1])%26);
+    con3[1][0] = ((con2[1][0]*conI[0][0] + con2[1][1]*conI[1][0])%26);
+    con3[1][1] = ((con2[1][0]*conI[0][1] + con2[1][1]*conI[1][1])%26);
+
+    keyOutput(con3);
+}
 int main(){
-    string text;
+    string text;string text2;
     int resp = 0;
     int key[2][2];
 
@@ -202,14 +212,13 @@ int main(){
             elCheck(key, text);
             break;
         case 3:
-            // string text2;
-            // cout << "\nMasukkan text sebelum enkripsi: ";
-            // cin >> text;
+            cout << "\nMasukkan text sebelum enkripsi: ";
+            cin >> text;
 
-            // cout << "\nMasukkan text setelah enkripsi: ";
-            // cin >> text;
+            cout << "\nMasukkan text setelah enkripsi: ";
+            cin >> text2;
 
-            // keySearch(key, text, text2);
+            keySearch(key, text, text2);
             break;
         default:
             cout << "Respon tidak sesuai";
